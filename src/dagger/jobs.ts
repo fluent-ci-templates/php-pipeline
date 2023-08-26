@@ -45,7 +45,7 @@ export const test = async (client: Client, src = ".") => {
     })
     .withWorkdir("/app")
     .withServiceBinding("db", mariadb)
-    .withExec(["cp", ".env.example", ".env"])
+    .withExec(["sh", "-c", "[ -e .env.example ] && cp .env.example .env"])
     .withExec(["sh", "-c", "devbox run -- composer install --no-interaction"])
     .withExec(["sh", "-c", "devbox run -- php vendor/bin/phpunit"]);
 
