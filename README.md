@@ -33,7 +33,7 @@ dagger run fluentci .
 | Variable               | Description                                | Default |
 | ---------------------- | ------------------------------------------ | ------------- |
 |`MARIADB_USER`          | The username for the MariaDB database      | `homestead`        |
-|`MARIADB_PASSWORD`      | The password for the MariaDB database      | `homestead`    |
+|`MARIADB_PASSWORD`      | The password for the MariaDB database      | `secret`    |
 |`MARIADB_ROOT_PASSWORD` | The root password for the MariaDB database | `root`        |
 
 ## Jobs
