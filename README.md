@@ -1,10 +1,10 @@
-# Php Pipeline
+# PHP Pipeline
 
 [![deno module](https://shield.deno.dev/x/php_pipeline)](https://deno.land/x/php_pipeline)
 ![deno compatibility](https://shield.deno.dev/deno/^1.34)
 [![](https://img.shields.io/codecov/c/gh/fluent-ci-templates/php-pipeline)](https://codecov.io/gh/fluent-ci-templates/php-pipeline)
 
-A ready-to-use Pipeline for your php projects.
+A ready-to-use Pipeline for your PHP projects.
 
 ## 🚀 Usage
 
