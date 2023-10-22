@@ -33,7 +33,7 @@ jobs:
           dagger version
       - run:
           name: Upload Coverage
-          command: dagger run fluentci php_pipeline
+          command: fluentci run php_pipeline
     machine:
       image: ubuntu-2004:2023.07.1
 workflows:
