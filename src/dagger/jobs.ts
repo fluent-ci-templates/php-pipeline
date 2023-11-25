@@ -33,7 +33,8 @@ export const test = async (src = ".") => {
         "MARIADB_ROOT_PASSWORD",
         Deno.env.get("MARIADB_ROOT_PASSWORD") || "root"
       )
-      .withExposedPort(3306);
+      .withExposedPort(3306)
+      .asService();
 
     const baseCtr = withDevbox(
       client
