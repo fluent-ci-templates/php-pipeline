@@ -28,6 +28,14 @@ Now you can run the pipeline with:
 fluentci run .
 ```
 
+## Dagger Module
+
+Use as a [Dagger](https://dagger.io) module:
+
+```bash
+dagger mod install github.com/fluent-ci-templates/php-pipeline@mod
+```
+
 ## Environment variables
 
 | Variable               | Description                                | Default |
@@ -42,8 +50,10 @@ fluentci run .
 | --------- | ------------- |
 | test      | Run tests     |
 
-```graphql
-test(src: String!): String
+```typescript
+test(
+  src: Directory | string | undefined = "."
+): Promise<string>
 ```
 
 ## Programmatic usage
@@ -51,7 +61,7 @@ test(src: String!): String
 You can also use this pipeline programmatically:
 
 ```ts
-import { test } from "https://pkg.fluentci.io/php_pipeline@v0.4.1/mod.ts";
+import { test } from "https://pkg.fluentci.io/php_pipeline@v0.5.0/mod.ts";
 
 await test();
 ```

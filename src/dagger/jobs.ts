@@ -1,4 +1,7 @@
-import Client, { connect, withDevbox } from "../../deps.ts";
+import { Client, Directory } from "../../sdk/client.gen.ts";
+import { connect } from "../../sdk/connect.ts";
+import { withDevbox } from "../../sdk/nix/index.ts";
+import { getDirectory } from "./lib.ts";
 
 export enum Job {
   test = "test",
@@ -12,9 +15,18 @@ export const exclude = [
   ".devbox",
 ];
 
-export const test = async (src = ".") => {
+/**
+ * @function
+ * @description Run all tests
+ * @param {string | Directory} src
+ * @returns {string}
+ */
+export async function test(
+  src: Directory | string | undefined = "."
+): Promise<string> {
+  let result = "";
   await connect(async (client: Client) => {
-    const context = client.host().directory(src);
+    const context = getDirectory(client, src);
 
     // get MariaDB base image
     const mariadb = client
@@ -56,14 +68,12 @@ export const test = async (src = ".") => {
       .withExec(["sh", "-c", "devbox run -- composer install --no-interaction"])
       .withExec(["sh", "-c", "devbox run -- php vendor/bin/phpunit"]);
 
-    const result = await ctr.stdout();
-
-    console.log(result);
+    result = await ctr.stdout();
   });
-  return "Done";
-};
+  return result;
+}
 
-export type JobExec = (src?: string) => Promise<string>;
+export type JobExec = (src?: Directory | string) => Promise<string>;
 
 export const runnableJobs: Record<Job, JobExec> = {
   [Job.test]: test,
