@@ -52,7 +52,7 @@ dagger mod install github.com/fluent-ci-templates/php-pipeline@mod
 
 ```typescript
 test(
-  src: Directory | string | undefined = "."
+  src?: Directory | string
 ): Promise<string>
 ```
 
