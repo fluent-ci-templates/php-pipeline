@@ -1,6 +1,5 @@
 import { dag } from "../../deps.ts";
 import { Directory } from "../../sdk/client.gen.ts";
-import { withDevbox } from "../../sdk/nix/index.ts";
 import { getDirectory } from "./lib.ts";
 
 export enum Job {
@@ -24,7 +23,7 @@ export const exclude = [
 export async function test(
   src: Directory | string | undefined = "."
 ): Promise<string> {
-  const context = await getDirectory(dag, src);
+  const context = await getDirectory(src);
 
   // get MariaDB base image
   const mariadb = dag
@@ -46,18 +45,10 @@ export async function test(
     .withExposedPort(3306)
     .asService();
 
-  const baseCtr = withDevbox(
-    dag
-      .pipeline(Job.test)
-      .container()
-      .from("alpine:latest")
-      .withExec(["apk", "update"])
-      .withExec(["apk", "add", "bash", "curl"])
-      .withMountedCache("/nix", dag.cacheVolume("nix"))
-      .withMountedCache("/etc/nix", dag.cacheVolume("nix-etc"))
-  );
-
-  const ctr = baseCtr
+  const ctr = dag
+    .pipeline(Job.test)
+    .container()
+    .from("ghcr.io/fluentci-io/devbox:latest")
     .withMountedCache("/app/vendor", dag.cacheVolume("composer-vendor"))
     .withDirectory("/app", context, { exclude })
     .withWorkdir("/app")
